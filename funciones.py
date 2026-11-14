@@ -1,3 +1,4 @@
+from datetime import datetime
 from libro import Libro
 from usuario import Usuario
 
@@ -13,7 +14,8 @@ def mostrar_menu():
     print("7. Mostrar préstamos")
     print("8. Buscar libro")
     print("9. Buscar usuario")
-    print("10. Salir")
+    print("10. Mostrar historial de entradas y salidas")
+    print("11. Salir")
 
 
 def leer_texto(mensaje):
@@ -32,12 +34,23 @@ def leer_entero(mensaje):
         print("Entrada inválida. Ingrese un número entero.")
 
 
+def leer_fecha(mensaje):
+    while True:
+        valor = input(mensaje).strip()
+        if valor == "":
+            return None
+        try:
+            return datetime.strptime(valor, "%d/%m/%Y").date()
+        except ValueError:
+            print("Fecha inválida. Use el formato DD/MM/AAAA.")
+
+
 def leer_opcion():
     while True:
         opcion = leer_entero("Seleccione una opción: ")
-        if 1 <= opcion <= 10:
+        if 1 <= opcion <= 11:
             return opcion
-        print("Opción fuera de rango. Elija entre 1 y 10.")
+        print("Opción fuera de rango. Elija entre 1 y 11.")
 
 
 def registrar_libro(biblioteca):
@@ -58,12 +71,14 @@ def registrar_usuario(biblioteca):
 def pedir_prestamo(biblioteca):
     carnet = leer_texto("Carnet del usuario: ")
     codigo = leer_texto("Código del libro: ")
-    biblioteca.realizar_prestamo(carnet, codigo)
+    fecha = leer_fecha("Fecha de salida DD/MM/AAAA (Enter para hoy): ")
+    biblioteca.realizar_prestamo(carnet, codigo, fecha)
 
 
 def pedir_devolucion(biblioteca):
     codigo = leer_texto("Código del libro a devolver: ")
-    biblioteca.devolver_libro(codigo)
+    fecha = leer_fecha("Fecha de entrada DD/MM/AAAA (Enter para hoy): ")
+    biblioteca.devolver_libro(codigo, fecha)
 
 
 def pedir_busqueda_libro(biblioteca):

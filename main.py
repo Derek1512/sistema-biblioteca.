@@ -1,12 +1,12 @@
-from biblioteca import biblioteca
+from biblioteca import Biblioteca
 import funciones
 
 
 def main():
-    biblioteca = biblioteca()
+    biblioteca = Biblioteca()
     opcion = 0
 
-    while opcion != 10:
+    while opcion != 11:
         funciones.mostrar_menu()
         opcion = funciones.leer_opcion()
         print()
@@ -30,6 +30,8 @@ def main():
         elif opcion == 9:
             funciones.pedir_busqueda_usuario(biblioteca)
         elif opcion == 10:
+            biblioteca.mostrar_historial()
+        elif opcion == 11:
             print("Gracias por usar el sistema. ¡Hasta pronto!")
 
 
